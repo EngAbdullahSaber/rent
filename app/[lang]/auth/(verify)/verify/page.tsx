@@ -8,7 +8,6 @@ import { X } from "lucide-react";
 import { useState } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import VerfiyForm from "@/components/auth/verify-form";
-import Logo from "@/public/images/auth/LawyerLogo.png";
 import { motion } from "framer-motion";
 import LayoutLoader from "@/components/layout-loader";
 import LoginImage from "@/public/images/auth/13416089_5243319 1.png";

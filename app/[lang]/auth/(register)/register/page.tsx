@@ -7,7 +7,6 @@ import { X } from "lucide-react";
 import { Fragment, useState } from "react";
 import { motion } from "framer-motion";
 import LogInForm from "@/components/auth/login-form";
-import Logo from "@/public/images/auth/LawyerLogo.png";
 import RegForm from "./reg-form";
 const LoginPage = () => {
   console.log(logo);
@@ -32,16 +31,7 @@ const LoginPage = () => {
               initial={{ scale: 0 }}
               whileInView={{ scale: 1 }}
               transition={{ duration: 1.2 }}
-            >
-              <Image
-                src={Logo}
-                height={320}
-                width={384}
-                alt="logo"
-                className="w-96 h-80 block"
-                priority={true}
-              />
-            </motion.div>{" "}
+            ></motion.div>{" "}
             <motion.p
               initial={{ filter: "blur(20px)", opacity: 0 }}
               animate={{ filter: "blur(0px)", opacity: 1 }}
