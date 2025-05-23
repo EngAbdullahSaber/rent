@@ -7,7 +7,6 @@ import { X } from "lucide-react";
 import { Fragment, useState } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import CreatePasswordForm from "./create-password-form";
-import Logo from "@/public/images/auth/LawyerLogo.png";
 import { motion } from "framer-motion";
 import LoginImage from "@/public/images/auth/20602816_6333052 1.png";
 import LoginBackground from "@/public/images/auth/Minimal Pattern - 7 - A.png";

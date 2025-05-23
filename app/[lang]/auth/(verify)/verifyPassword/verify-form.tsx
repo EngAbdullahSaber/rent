@@ -5,7 +5,6 @@ import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import Logo from "@/public/images/auth/LawyerLogo.png";
 import { useTranslate } from "@/config/useTranslation";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
@@ -122,16 +121,7 @@ const VerifyForm = () => {
         initial={{ y: -50 }}
         whileInView={{ y: 0 }}
         transition={{ duration: 1.2 }}
-      >
-        <Image
-          src={Logo}
-          height={56}
-          width={56}
-          alt="logo"
-          className="w-14 h-14"
-          priority={true}
-        />
-      </motion.div>
+      ></motion.div>
       <motion.div
         initial={{ y: -50 }}
         whileInView={{ y: 0 }}
