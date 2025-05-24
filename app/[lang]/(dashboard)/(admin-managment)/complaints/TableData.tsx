@@ -6,6 +6,7 @@ import { DataTable } from "../../tables/advanced/components/data-table";
 import { DataTableColumnHeader } from "../../tables/advanced/components/data-table-column-header";
 import { useState } from "react";
 import { Switch } from "@/components/ui/switch";
+import ViewMore from "./View";
 import DeleteConfirmationDialog from "../../shared/DeleteConfirmationDialog";
 
 interface Task {
@@ -62,20 +63,23 @@ const TableData = () => {
       cell: ({ row }) => (
         <div className="flex flex-row gap-2 items-center justify-center">
           <DeleteConfirmationDialog
-            title="Deleting Category"
-            description="Are You Sure For Delete This Category?"
+            title="Deleting Complaint"
+            description="Are You Sure For Delete This Complaint?"
             handleDelete={handleDelete}
             id={row.original.id} // Pass the id directly
           />{" "}
-          {/* <ViewMore row={row.original} /> */}
+          <ViewMore row={row.original} />
           {/* <DeleteButton /> */}
         </div>
       ),
     },
     {
-      accessorKey: "Category name",
+      accessorKey: "Name of the complainant",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title={"Category name"} />
+        <DataTableColumnHeader
+          column={column}
+          title={"Name of the complainant"}
+        />
       ),
       cell: ({ row }) => {
         return (
@@ -87,11 +91,10 @@ const TableData = () => {
         );
       },
     },
-
     {
-      accessorKey: "Classification icon",
+      accessorKey: "Complaint status",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title={"Classification icon"} />
+        <DataTableColumnHeader column={column} title={"Complaint status"} />
       ),
       cell: ({ row }) => {
         return (
@@ -107,15 +110,33 @@ const TableData = () => {
       },
     },
     {
-      accessorKey: "Subcategories",
+      accessorKey: "Type of complainant",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} title={"Subcategories"} />
+        <DataTableColumnHeader column={column} title={"Type of complainant"} />
       ),
       cell: ({ row }) => {
         return (
           <div className="flex  items-center justify-center gap-2 mx-auto">
             <span className="max-w-[500px] truncate font-medium">
-              {row.original.CITY}
+              <Switch defaultChecked />
+            </span>
+          </div>
+        );
+      },
+      filterFn: (row, id, value) => {
+        return value.includes(row.getValue(id));
+      },
+    },
+    {
+      accessorKey: "Created",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title={"Created"} />
+      ),
+      cell: ({ row }) => {
+        return (
+          <div className="flex  items-center justify-center gap-2 mx-auto">
+            <span className="max-w-[500px] truncate font-medium">
+              {row.original.CREATED}
             </span>
           </div>
         );

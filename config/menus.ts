@@ -2,7 +2,6 @@ import {
   ServiceProvider,
   Category,
   Home,
-  Case,
   Lawyer,
   Requests,
   Appointments,
@@ -34,18 +33,23 @@ export interface MenuItemProps {
 const adminMenu = [
   {
     title: "Dashboard",
-    icon: Dashboard,
+    icon: Home,
     href: "/dashboard",
   },
   {
     title: "Service providers",
     icon: ServiceProvider,
-    href: "/management-service-providers",
+    href: "/service-providers",
   },
   {
     title: "Categories",
     icon: Category,
-    href: "/categories-management",
+    href: "/categories",
+  },
+  {
+    title: "Complaints",
+    icon: Category,
+    href: "/complaints",
   },
 ];
 const lawyerMenu = [];

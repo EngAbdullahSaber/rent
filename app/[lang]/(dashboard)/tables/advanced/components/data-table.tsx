@@ -28,6 +28,7 @@ import {
 import { DataTablePagination } from "./data-table-pagination";
 import { DataTableToolbar } from "./data-table-toolbar";
 import { useTranslate } from "@/config/useTranslation";
+
 interface DataTableProps<TData> {
   columns: any;
   data: any;
@@ -36,13 +37,15 @@ interface DataTableProps<TData> {
   onFilterChange: any;
   page: number;
   search: string;
-  searchPalsceholder: string;
+  searchPlaceholder: string;
   open: any;
   setOpen?: any;
   setPage?: (pageId: any) => void;
   setSearch?: (data: any) => void;
   isPaginationDisabled: boolean;
+  getSubRows?: (row: TData) => TData[] | undefined;
 }
+
 export function DataTable<TData>({
   columns,
   data,
@@ -53,10 +56,11 @@ export function DataTable<TData>({
   setPage,
   setOpen,
   open,
-  searchPalsceholder,
+  searchPlaceholder,
   setSearch,
   isPaginationDisabled,
   search,
+  getSubRows,
 }: DataTableProps<TData>) {
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
@@ -66,7 +70,7 @@ export function DataTable<TData>({
   );
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const { t, loading, error } = useTranslate();
-
+  console.log(searchPlaceholder);
   const table = useReactTable({
     data,
     columns,
@@ -87,6 +91,8 @@ export function DataTable<TData>({
     getSortedRowModel: getSortedRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
+    getSubRows: getSubRows, // Pass the getSubRows function
+    getRowId: (row) => row.id, // Ensure each row has a unique ID
   });
 
   return (
@@ -100,13 +106,13 @@ export function DataTable<TData>({
         onFilterChange={onFilterChange}
         filtersConfig={filtersConfig}
         onFilterSubmit={onFilterSubmit}
-        searchPalsceholder={searchPalsceholder}
+        searchPlaceholder={searchPlaceholder}
       />
-      <div className="rounded-md ">
+      <div className="rounded-md">
         <Table id="data-table">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id} className="">
+              <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead
@@ -116,7 +122,10 @@ export function DataTable<TData>({
                     >
                       {header.isPlaceholder
                         ? null
-                        : t(header?.id?.toLocaleLowerCase())}
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
                     </TableHead>
                   );
                 })}
@@ -127,31 +136,52 @@ export function DataTable<TData>({
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                  className="my-2" // Add margin between rows
-                  style={{
-                    backgroundColor: "transparent", // Ensure background is transparent
-                    borderSpacing: "0 10px", // Alternative approach
-                    borderCollapse: "separate", // Needed with borderSpacing
-                  }}
-                >
-                  {row.getVisibleCells().map((cell) => {
-                    return (
+                <React.Fragment key={row.id}>
+                  <TableRow
+                    data-state={row.getIsSelected() && "selected"}
+                    className="my-2"
+                  >
+                    {row.getVisibleCells().map((cell) => (
                       <TableCell
-                        className="!text-center rtl:!text-center bg-white dark:bg-[#1E293B] rounded-lg" // Add rounded corners and background
+                        className="!text-center rtl:!text-center bg-white dark:bg-[#1E293B] rounded-lg"
                         key={cell.id}
-                        value={cell.getValue()}
+                        style={{
+                          paddingLeft: `${row.depth * 20}px`,
+                        }}
                       >
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()
                         )}
                       </TableCell>
-                    );
-                  })}
-                </TableRow>
+                    ))}
+                  </TableRow>
+
+                  {/* Render expanded subrows */}
+                  {row.getIsExpanded() &&
+                    row.subRows &&
+                    row.subRows.map((subRow) => (
+                      <TableRow
+                        key={subRow.id}
+                        className="my-2 bg-gray-50 dark:bg-gray-800"
+                      >
+                        {subRow.getVisibleCells().map((cell) => (
+                          <TableCell
+                            className="!text-center rtl:!text-center rounded-lg"
+                            key={cell.id}
+                            style={{
+                              paddingLeft: `${(subRow.depth ?? 0) * 20}px`,
+                            }}
+                          >
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    ))}
+                </React.Fragment>
               ))
             ) : (
               <TableRow>
@@ -172,7 +202,7 @@ export function DataTable<TData>({
         setPage={setPage}
         page={page}
         isPaginationDisabled={isPaginationDisabled}
-      />{" "}
+      />
     </div>
   );
 }

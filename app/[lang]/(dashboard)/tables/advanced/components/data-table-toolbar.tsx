@@ -22,7 +22,7 @@ interface DataTableToolbarProps {
   setOpen?: any;
   open: any;
   search: string;
-  searchPalsceholder: string;
+  searchPlaceholder: string;
 }
 
 export function DataTableToolbar({
@@ -33,17 +33,17 @@ export function DataTableToolbar({
   setOpen,
   open,
   search,
-  searchPalsceholder,
+  searchPlaceholder,
   setSearch,
 }: DataTableToolbarProps) {
   const { t } = useTranslate();
-  console.log(open);
+  console.log(searchPlaceholder);
 
   return (
     <div className="flex flex-1 flex-wrap items-center justify-end gap-2">
-      {searchPalsceholder ? (
+      {searchPlaceholder ? (
         <Input
-          placeholder={t(searchPalsceholder)}
+          placeholder={t(searchPlaceholder)}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="h-8 min-w-[200px] max-w-sm  text-[#fff]"
@@ -51,7 +51,6 @@ export function DataTableToolbar({
       ) : (
         <div></div>
       )}
-      <DataTableViewOptions table={table} />
       <LayoutFilter
         setOpen={setOpen}
         open={open}
