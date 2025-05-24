@@ -5,31 +5,22 @@ import { useSidebar, useThemeStore } from "@/store";
 import { themes } from "@/config/thems";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
-import { VerticalSvg, HorizontalSvg, SemiBoxSvg } from "@/components/svg";
 import { Icon } from "@iconify/react";
 const sidebarOptions = [
   {
     key: "module",
     label: "Module",
-    disabled: (layout: string) => layout === "semibox" || layout === "horizontal",
-    svg: (
-      <VerticalSvg className="[&>rect]:fill-default-300 [&>circle]:fill-default-400 [&>path]:fill-default-400" />
-    ),
+    disabled: (layout: string) =>
+      layout === "semibox" || layout === "horizontal",
   },
   {
     key: "classic",
     label: "Classic",
     disabled: (layout: string) => layout === "semibox",
-    svg: (
-      <SemiBoxSvg className="[&>rect]:fill-default-300 [&>circle]:fill-default-400 [&>path]:fill-default-400" />
-    ),
   },
   {
     key: "popover",
     label: "Popover",
-    svg: (
-      <SemiBoxSvg className="[&>rect]:fill-default-300 [&>circle]:fill-default-400 [&>path]:fill-default-400" />
-    ),
   },
 ];
 
@@ -42,11 +33,12 @@ const SidebarChange = () => {
 
   return (
     <div
-      style={{
-        "--theme-primary": `hsl(${newTheme?.cssVars[mode === "dark" ? "dark" : "light"].primary
+      style={
+        {
+          "--theme-primary": `hsl(${
+            newTheme?.cssVars[mode === "dark" ? "dark" : "light"].primary
           })`,
-      } as React.CSSProperties
-
+        } as React.CSSProperties
       }
     >
       <div className="mb-2 relative inline-block px-3 py-[3px] rounded-md before:bg-[--theme-primary] before:absolute before:top-0 before:left-0 before:w-full  before:h-full before:rounded before:opacity-10 before:z-[-1]  text-[--theme-primary]  text-xs font-medium">
@@ -79,7 +71,6 @@ const SidebarChange = () => {
                   className=" text-[--theme-primary] absolute top-1 right-1"
                 />
               )}
-              {sidebarOption.svg}
             </button>
 
             <Label className=" text-muted-foreground font-normal block mt-2">

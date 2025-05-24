@@ -10,16 +10,16 @@ import {
 import SidebarChange from "./sidebar-change";
 import SelectTheme from "./select-theme";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Settings } from "@/components/svg";
 import { useThemeStore } from "@/store";
 import SelectLayout from "./select-layout";
 
 const ThemeCustomize = ({
   trigger = (
     <div className="fixed ltr:right-4 rtl:left-4 bottom-28 z-50">
-      <Button size="icon" className=" relative h-12 w-12  rounded-full ">
-        <Settings className="h-7 w-7 animate-spin" />
-      </Button>
+      <Button
+        size="icon"
+        className=" relative h-12 w-12  rounded-full "
+      ></Button>
     </div>
   ),
 }) => {
