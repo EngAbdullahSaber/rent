@@ -2,24 +2,11 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useThemeStore } from "@/store";
-import { useTheme } from "next-themes";
-import { themes } from "@/config/thems";
+
 import { useTranslate } from "@/config/useTranslation";
-import { Docs } from "@/components/svg";
-import cardBg from "../../../../assets/service_card_bg.png";
+
 import "./custemStyleReports.css";
-import Image from "next/image";
-import CalendarPage from "./components/CalendarPage";
-import ReportsChart from "./components/reports-snapshot/reports-chart";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { getDashBoardInfo } from "@/services/auth/auth";
-import { useParams } from "next/navigation";
-import { Auth } from "@/components/auth/Auth";
-import { getAllRoles } from "@/services/permissionsAndRoles/permissionsAndRoles";
-import { clearAuthInfo } from "@/services/utils";
-import { useAccessToken } from "@/config/accessToken";
-import { updateAxiosHeader } from "@/services/axios";
+
 import DatePickerWithRange from "@/components/date-picker-with-range";
 import EcommerceStats from "./components/ecommerce-stats";
 import ReportsSnapshot from "./components/reports-snapshot";

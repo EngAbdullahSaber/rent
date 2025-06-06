@@ -126,7 +126,19 @@
   "Message": "Message",
   "Date of the Complaint": "Date of the Complaint",
   "Details of “Complaint”": "Details of “Complaint”",
-  "Complaint Name": "Complaint Name",
+  "Complaint Name": "Complaint Name","Banner": "Banner",
+  "Banners": "Banners",
+  "Management of Banners": "Management of Banners",
+  "Are You Sure For Delete This Banner?": "Are You Sure For Delete This Banner?",
+  "Deleting Banner": "Deleting Banner",
+  "Banner Image Is Required": "Banner Image Is Required",
+  "Please enter a valid URL": "Please enter a valid URL",
+  "Banner Title is required": "Banner Title is required",
+  "Banner Link": "Banner Link",
+  "Banner Title": "Banner Title",
+  "Banner Image": "Banner Image",
+  "Create a New Banner": "Create a New Banner",
+  "Create Banner": "Create Banner",
   "Details of “Service Provider Name”": "Details of “Service Provider Name”"
 }
 

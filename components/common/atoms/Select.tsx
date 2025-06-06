@@ -1,72 +1,171 @@
 "use client";
 import { useTranslate } from "@/config/useTranslation";
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
-interface PropsCountries {
-  keyData: string;
-  label?: string;
-  place?: string;
-  classname?: string;
-  width?: string;
-  height?: string;
-  setValue?: any;
-
-  classnameLabel?: string;
-  data?: any;
+interface SelectOption {
+  value: string | number;
+  label: string;
 }
 
-export const Select: React.FC<PropsCountries> = ({  data , classnameLabel ,  keyData, label, classname, width, height, place, setValue }) => {
-  const {lang} = useTranslate()
-  const [show, setShow] = useState(false);
-  const [selectData, setSelectData] = useState<any>(place || data[0]?.label);
+interface SelectProps {
+  keyData: string;
+  label?: string;
+  placeholder?: string;
+  className?: string;
+  classNameLabel?: string;
+  width?: string;
+  height?: string;
+  setValue?: (key: string, value: any) => void;
+  data?: SelectOption[];
+  value?: any;
+  disabled?: boolean;
+  searchable?: boolean;
+}
 
+export const Select: React.FC<SelectProps> = ({
+  data = [],
+  classNameLabel = "",
+  keyData,
+  label,
+  className = "",
+  width = "w-full",
+  height = "h-[40px]",
+  placeholder = "Select...",
+  setValue,
+  value,
+  disabled = false,
+  searchable = true,
+}) => {
+  const { lang, t } = useTranslate();
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState<SelectOption | null>(
+    null
+  );
+  const [searchTerm, setSearchTerm] = useState("");
+  const selectRef = useRef<HTMLDivElement>(null);
 
-  const handleValue = (e: any) => {
-    setSelectData(e?.label);
-    setShow(!show);
-    setValue && setValue(keyData , e?.value ) 
-  };
+  // Set initial selected option based on value prop
+  useEffect(() => {
+    if (value && data.length > 0) {
+      const foundOption = data.find((option) => option.value === value);
+      if (foundOption) {
+        setSelectedOption(foundOption);
+      }
+    } else {
+      setSelectedOption(null);
+    }
+  }, [value, data]);
 
-  useEffect(()=> {
-    handleValue(data[0])  ; 
-    setShow(false)
-  } ,[data])
-
-
-
-  //! onBlur Close the Select
-  const selectRef = useRef<any>(null);
+  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (selectRef.current && !selectRef.current.contains(event.target as Node)) setShow(false);
+      if (
+        selectRef.current &&
+        !selectRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const handleSelect = (option: SelectOption) => {
+    setSelectedOption(option);
+    setIsOpen(false);
+    setValue?.(keyData, option.value);
+  };
+
+  const filteredOptions = data.filter((option) =>
+    option.label.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
-      <div className={` selectCustom flex max-sm:flex-wrap gap-[20px] relative ${width}`}>
-        <div className={` h-full w-full relative ${classname} `} ref={selectRef}>
-          {label && ( <label className={`text-[14px] font-[600] capitalize `} htmlFor={keyData}> {label} </label> )}
+    <div className={`${width} mb-4`} ref={selectRef}>
+      {label && (
+        <label
+          className={`block text-sm font-medium text-gray-700 mb-1 ${classNameLabel}`}
+          htmlFor={keyData}
+        >
+          {label}
+        </label>
+      )}
 
-          <div className={`w-full ${height || "h-[37px]"} input bg-white  mt-[5px] rounded-[5px] border-[1px]  relative`} id={keyData}>
-            <div onClick={() => data.length >= 1 && setShow(!show)} className={`flex gap-[10px] items-center px-[10px] relative z-[230] h-full cursor-pointer`}>
-              <div className={` text-xs P-12 text-[#878b94] flex items-center gap-[8px]`}  >{selectData}</div>
-              <div className="ltr:border-l-[2px] rtl:border-r-[2px] border-[#cccccc] absolute w-[25px] ltr:right-0 rtl:left-0 h-[15px] flex items-center justify-center " > <svg  className={` stroke-[#cccccc]   duration-300 transition-all w-[11px] h-[11px]  `} width="13" height="11" viewBox="0 0 18 11" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M16.2773 1.5L9.13888 9L2.00042 1.5" stroke="" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" /> </svg></div>
-            </div>
+      <div className="relative">
+        <button
+          type="button"
+          className={`${height} ${className} w-full flex items-center justify-between px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm text-left focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+            disabled
+              ? "bg-gray-100 cursor-not-allowed opacity-70"
+              : "hover:border-gray-400"
+          }`}
+          onClick={() => !disabled && setIsOpen(!isOpen)}
+          disabled={disabled}
+          aria-haspopup="listbox"
+          aria-expanded={isOpen}
+        >
+          <span
+            className={`truncate ${!selectedOption ? "text-gray-400" : ""}`}
+          >
+            {selectedOption ? selectedOption.label : t(placeholder)}
+          </span>
+          <svg
+            className={`h-5 w-5 text-gray-400 transform transition-transform ${
+              isOpen ? "rotate-180" : ""
+            }`}
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              fillRule="evenodd"
+              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+              clipRule="evenodd"
+            />
+          </svg>
+        </button>
 
-            { <div className={` ${show ? "block" : "hidden"} shadow-inner z-[1000]  rounded-[5px] duration-500  absolute bg-white w-[100%] shadow_box border-[1px] border-gray-200 max-h-[160px] overflow-y-auto top-[110%]`}>
-              {data?.map((e: any, i: number) => (
-                <div  onClick={() => handleValue(e)} className="flex items-center gap-[10px] w-full px-[10px] hover:bg-[#e9e9e9] duration-300 cursor-pointer" > 
-                  <div className={`flex py-[5px] P-12  !text-[12px] items-center gap-[10px] min-h-[40px]`} key={i} > {e?.label} </div>
+        {isOpen && (
+          <div className="absolute z-10 mt-1 w-full bg-white shadow-lg rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 focus:outline-none max-h-60 overflow-auto">
+            {searchable && (
+              <div className="px-3 py-2 sticky top-0 bg-white border-b">
+                <input
+                  type="text"
+                  className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  placeholder="Search..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  autoFocus
+                />
+              </div>
+            )}
+
+            <div className="py-1">
+              {filteredOptions.length > 0 ? (
+                filteredOptions.map((option) => (
+                  <button
+                    key={option.value}
+                    className={`w-full text-left px-3 py-2 text-sm hover:bg-blue-50 ${
+                      selectedOption?.value === option.value
+                        ? "bg-blue-100 text-blue-800"
+                        : ""
+                    }`}
+                    onClick={() => handleSelect(option)}
+                  >
+                    {option.label}
+                  </button>
+                ))
+              ) : (
+                <div className="px-3 py-2 text-sm text-gray-500">
+                  No options found
                 </div>
-              ))}
-            </div>}
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </div>
-    
+    </div>
   );
 };

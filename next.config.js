@@ -34,7 +34,6 @@ const nextConfig = {
 
     return config;
   },
-
   images: {
     remotePatterns: [
       {
@@ -59,7 +58,11 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "system.msaatylaw.com", // Add this line
+        hostname: "system.msaatylaw.com",
+      },
+      {
+        protocol: "https",
+        hostname: "api.venuat.com", // ✅ Add this line
       },
     ],
   },

@@ -24,6 +24,8 @@ interface DeleteConfirmationDialogProps {
   confirmButtonText?: string;
   cancelButtonText?: string;
   icon?: string;
+  class?: string;
+  buttonShape?: boolean;
   triggerClassName?: string;
   id: any;
 }
@@ -32,6 +34,8 @@ const DeleteConfirmationDialog: React.FC<DeleteConfirmationDialogProps> = ({
   trigger,
   title,
   description,
+  buttonShape,
+  class: className = "",
   handleDelete,
   confirmButtonText = "Agree",
   cancelButtonText = "Disagree",
@@ -107,7 +111,7 @@ const DeleteConfirmationDialog: React.FC<DeleteConfirmationDialogProps> = ({
             <Button
               size="icon"
               variant="outline"
-              className={`h-7 w-7 ${triggerClassName}`}
+              className={`h-7 w-7 ${triggerClassName} ${className} `}
               color="secondary"
             >
               <Icon icon="heroicons:trash" className="h-4 w-4" />

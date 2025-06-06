@@ -73,27 +73,12 @@ const ProfileInfo = () => {
             </Link>
           </div> 
         </DropdownMenuLabel> */}
-        {/* <DropdownMenuGroup>
+        <DropdownMenuGroup>
           {[
             {
               name: t("Profile"),
               icon: "heroicons:user",
               href: "/user-profile",
-            },
-            {
-              name: "Billing",
-              icon: "heroicons:megaphone",
-              href:"/dashboard"
-            },
-            {
-              name: t("Settings"),
-              icon: "heroicons:paper-airplane",
-              href: "/dashboard",
-            },
-            {
-              name: "Keyboard shortcuts",
-              icon: "heroicons:language",
-              href:"/dashboard"
             },
           ].map((item, index) => (
             <Link
@@ -107,7 +92,7 @@ const ProfileInfo = () => {
               </DropdownMenuItem>
             </Link>
           ))}
-        </DropdownMenuGroup> */}
+        </DropdownMenuGroup>
         {/* <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <Link href="/dashboard" className="cursor-pointer">

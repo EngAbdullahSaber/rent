@@ -78,11 +78,13 @@ interface UpdateButtonProps<T extends Record<string, any>> {
   open?: boolean;
   flag?: boolean;
   itemId: string; // ID of the item being updated
+  classes: string; // CSS classes for the button
 }
 
 const UpdateButton = <T extends Record<string, any>>({
   entityName,
   initialData,
+  classes,
   currentData,
   fields,
   onUpdate,
@@ -632,7 +634,7 @@ const UpdateButton = <T extends Record<string, any>>({
         size="icon"
         onClick={handleOpen}
         variant="outline"
-        className=" h-7 w-7"
+        className={`${classes} h-7 w-7`}
         color="secondary"
       >
         <Icon icon="heroicons:pencil" className="h-4 w-4" />

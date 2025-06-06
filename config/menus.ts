@@ -2,20 +2,18 @@ import {
   ServiceProvider,
   Category,
   Home,
-  Lawyer,
-  Requests,
-  Appointments,
-  Tasks,
-  Courts,
+  loyaltySystem,
+  EarningsSettings,
+  Clients,
+  Complaints,
   Dashboard,
   Features,
-  Regions,
-  Reports,
-  Property,
-  Finance,
-  products,
-  reports,
-  Reservation,
+  Services,
+  Banners,
+  Orders,
+  purchaseVoucher,
+  TermsAndCondtion,
+  SystemDesign,
 } from "@/components/svg";
 import { useRole } from "./useRole"; // Import the custom hook
 export interface MenuItemProps {
@@ -42,14 +40,75 @@ const adminMenu = [
     href: "/service-providers",
   },
   {
+    title: "Services",
+    icon: Services,
+    href: "/services",
+  },
+  {
     title: "Categories",
     icon: Category,
     href: "/categories",
   },
   {
     title: "Complaints",
-    icon: Category,
+    icon: Complaints,
     href: "/complaints",
+  },
+  {
+    title: "Banners",
+    icon: Banners,
+    href: "/banners",
+  },
+
+  {
+    title: "Orders",
+    icon: Orders,
+    href: "/orders",
+  },
+  {
+    title: "Clients",
+    icon: Clients,
+    href: "/clients",
+  },
+  {
+    title: "Earnings settings",
+    icon: EarningsSettings,
+    href: "/EarningsSettings",
+  },
+  {
+    title: "Terms and Condition",
+    icon: TermsAndCondtion,
+    href: "/TermsAndCondition",
+  },
+  {
+    title: "Loyalty system",
+    icon: loyaltySystem,
+    href: "/loyaltySystem",
+  },
+  {
+    title: "Sales statistics",
+    icon: SystemDesign,
+    href: "/sales-statistics",
+  },
+  {
+    title: "Purchase voucher",
+    icon: purchaseVoucher,
+    href: "/purchaseVoucher",
+  },
+  {
+    title: "System Design",
+    icon: SystemDesign,
+    href: "/systemDesign",
+  },
+  {
+    title: "Reservations",
+    icon: SystemDesign,
+    href: "/reservations",
+  },
+  {
+    title: "Messages",
+    icon: SystemDesign,
+    href: "/messages",
   },
 ];
 const lawyerMenu = [];
